@@ -3,11 +3,7 @@ import { ADD_MESSAGE, chatReducer } from '../../reducer/reducer';
 import './Chat.css';
 
 export const Chat = () => {
-    const [state, dispatchMessage] = useReducer(chatReducer, {
-        messages: [
-            { bot: true, text: "Hello, how can I help you today?" },
-        ]
-    });
+    const [state, dispatchMessage] = useReducer(chatReducer, {messages: []});
     const [writing, setWriting] = useState(false);
     const conversationRef = useRef<HTMLDivElement>(null);
 
@@ -20,7 +16,10 @@ export const Chat = () => {
     const handleChatSubmission = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+    
         const value = (e.currentTarget[0] as HTMLInputElement).value;
+        if (!value.trim()) return; // Prevent empty messages
+        
         dispatchMessage({ type: ADD_MESSAGE, message: { text: value, bot: false } });
         e.currentTarget.reset();
 
