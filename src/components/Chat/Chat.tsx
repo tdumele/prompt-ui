@@ -1,14 +1,21 @@
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import { ADD_MESSAGE, chatReducer } from '../../reducer/reducer';
 import './Chat.css';
 
 export const Chat = () => {
     const [state, dispatchMessage] = useReducer(chatReducer, {
         messages: [
-            { bot: true, text: "Hello, how can I help you today?" }
+            { bot: true, text: "Hello, how can I help you today?" },
         ]
     });
     const [writing, setWriting] = useState(false);
+    const conversationRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (conversationRef.current) {
+            conversationRef.current.scrollTop = conversationRef.current.scrollHeight;
+        }
+    }, [state.messages, writing]);
 
     const handleChatSubmission = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -31,7 +38,7 @@ export const Chat = () => {
 
     return (
         <div className="flex flex-col h-screen">
-            <div>
+            <div id="conversation" ref={conversationRef} className='overflow-y-auto scroll-auto h-4/5'>
                 {
                     state.messages.map((message: any) => {
                         return message.bot ?
