@@ -4,7 +4,7 @@ export const Sidebar = () => {
     return (
         <>
             <aside id="default-sidebar" className="col-span-1 h-screen" aria-label="Sidebar">
-                <div className="h-full px-3 py-4 overflow-y-auto bg-gray-800">
+                <div className="h-full px-3 py-4 overflow-y-auto bg-[#333]">
                     <ul>
                         <li>
                             <a href="#" className="flex rounded-lg hover:bg-gray-200">

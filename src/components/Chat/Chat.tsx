@@ -41,12 +41,12 @@ export const Chat = () => {
                 {
                     state.messages.map((message: Message) => {
                         return message.bot ?
-                            <div key={message.id} className="p-4 bg-gray-200 my-2 rounded-lg w-3/5">
-                                <p className="text-gray-800">{message.text}</p>
+                            <div key={message.id} className="p-2 bg-[#F5EFE7] my-2 rounded-lg w-3/5">
+                                <p className="text-[#213555]">{message.text}</p>
                             </div>
                             :
-                            <div key={message.id} className="p-4 bg-gray-800 my-2 rounded-lg w-3/5 ml-auto text-right">
-                                <p className="text-white">{message.text}</p>
+                            <div key={message.id} className="p-2 bg-[#D8C4B6] my-2 rounded-lg w-3/5 ml-auto text-right">
+                                <p className="text-[#213555]">{message.text}</p>
                             </div>
                     })
                 }
