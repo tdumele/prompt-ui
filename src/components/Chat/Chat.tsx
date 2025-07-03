@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
-import { ADD_MESSAGE, chatReducer } from '../../reducer/reducer';
+import { ADD_MESSAGE, chatReducer, RESET_CHAT } from '../../reducer/reducer';
 import './Chat.css';
 import type { Message } from '../../reducer/types/messages';
 
@@ -67,7 +67,12 @@ export const Chat = () => {
                         type="text"
                         placeholder="Tape your message here"
                     />
+                    <a className="flex flex-col items-center p-2 w-full text-gray-900 fixed bottom-2 text-sm"
+                        onClick={() => dispatchMessage({ type: RESET_CHAT })}>
+                        Reset
+                    </a>
                 </form>
+
             </footer>
         </div>
     );
