@@ -1,9 +1,10 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import { ADD_MESSAGE, chatReducer } from '../../reducer/reducer';
 import './Chat.css';
+import type { Message } from '../../reducer/types/messages';
 
 export const Chat = () => {
-    const [state, dispatchMessage] = useReducer(chatReducer, {messages: []});
+    const [state, dispatchMessage] = useReducer(chatReducer, { messages: [] });
     const [writing, setWriting] = useState(false);
     const conversationRef = useRef<HTMLDivElement>(null);
 
@@ -13,33 +14,32 @@ export const Chat = () => {
         }
     }, [state.messages, writing]);
 
-    const handleChatSubmission = (e: React.FormEvent<HTMLFormElement>) => {
+    function handleChatSubmission(e: React.FormEvent<HTMLFormElement>): void {
         e.preventDefault();
 
-    
         const value = (e.currentTarget[0] as HTMLInputElement).value;
         if (!value.trim()) return; // Prevent empty messages
-        
-        dispatchMessage({ type: ADD_MESSAGE, message: { text: value, bot: false } });
+
+        dispatchMessage({ type: ADD_MESSAGE, message: { text: value, bot: false, id: crypto.randomUUID() } });
         e.currentTarget.reset();
 
         callChatbotAPI(value).then((res) => {
             setWriting(false);
             dispatchMessage({ type: ADD_MESSAGE, message: res });
-        });
+        })
     }
 
     async function callChatbotAPI(message: string) {
         setWriting(true);
         // Simulate a response from the chatbot
-        return await new Promise(resolve => setTimeout(() => resolve({ bot: true, text: `You said: ${message}` }), 1000)); // Simulate network delay
+        return await new Promise(resolve => setTimeout(() => resolve({ bot: true, text: `You said: ${message}`, id: crypto.randomUUID() }), 1000)); // Simulate network delay
     };
 
     return (
         <div className="flex flex-col h-screen">
             <div id="conversation" ref={conversationRef} className='overflow-y-auto scroll-auto h-4/5'>
                 {
-                    state.messages.map((message: any) => {
+                    state.messages.map((message: Message) => {
                         return message.bot ?
                             <div key={message.id} className="p-4 bg-gray-200 my-2 rounded-lg w-3/5">
                                 <p className="text-gray-800">{message.text}</p>
