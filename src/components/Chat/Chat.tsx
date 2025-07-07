@@ -2,6 +2,7 @@ import { useEffect, useReducer, useRef, useState } from 'react';
 import { ADD_MESSAGE, chatReducer, RESET_CHAT } from '../../reducer/reducer';
 import './Chat.css';
 import type { Message } from '../../reducer/types/messages';
+import { API } from '../../services/api';
 
 export const Chat = () => {
     const [state, dispatchMessage] = useReducer(chatReducer, { messages: [] });
@@ -23,16 +24,27 @@ export const Chat = () => {
         dispatchMessage({ type: ADD_MESSAGE, message: { text: value, bot: false, id: crypto.randomUUID() } });
         e.currentTarget.reset();
 
-        callChatbotAPI(value).then((res) => {
+        callChatbotAPI(value).then((response) => response.json()).then((res) => {
+            const responseContent = {
+                bot: true,
+                text: res.result.output.text,
+                id: crypto.randomUUID()
+
+            }
             setWriting(false);
-            dispatchMessage({ type: ADD_MESSAGE, message: res });
+            dispatchMessage({ type: ADD_MESSAGE, message: responseContent });
         })
     }
 
     async function callChatbotAPI(message: string) {
         setWriting(true);
-        // Simulate a response from the chatbot
-        return await new Promise(resolve => setTimeout(() => resolve({ bot: true, text: `You said: ${message}`, id: crypto.randomUUID() }), 1000)); // Simulate network delay
+        return fetch(API.bff.chat, {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                content: message
+            }),
+        });
     };
 
     return (
