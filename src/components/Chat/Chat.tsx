@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
-import { ADD_MESSAGE, chatReducer } from '../../reducer/reducer';
+import { ADD_MESSAGE, chatReducer, RESET_CHAT } from '../../reducer/reducer';
 import './Chat.css';
 import type { Message } from '../../reducer/types/messages';
 import { API } from '../../services/api';
@@ -53,12 +53,12 @@ export const Chat = () => {
                 {
                     state.messages.map((message: Message) => {
                         return message.bot ?
-                            <div key={message.id} className="p-4 bg-gray-200 my-2 rounded-lg w-3/5">
-                                <p className="text-gray-800">{message.text}</p>
+                            <div key={message.id} className="p-2 bg-[#F5EFE7] my-2 rounded-lg w-3/5">
+                                <p className="text-[#213555]">{message.text}</p>
                             </div>
                             :
-                            <div key={message.id} className="p-4 bg-gray-800 my-2 rounded-lg w-3/5 ml-auto text-right">
-                                <p className="text-white">{message.text}</p>
+                            <div key={message.id} className="p-2 bg-[#D8C4B6] my-2 rounded-lg w-3/5 ml-auto text-right">
+                                <p className="text-[#213555]">{message.text}</p>
                             </div>
                     })
                 }
@@ -79,7 +79,12 @@ export const Chat = () => {
                         type="text"
                         placeholder="Tape your message here"
                     />
+                    <a className="flex flex-col items-center p-2 w-full text-gray-900 fixed bottom-2 text-sm"
+                        onClick={() => dispatchMessage({ type: RESET_CHAT })}>
+                        Reset
+                    </a>
                 </form>
+
             </footer>
         </div>
     );
