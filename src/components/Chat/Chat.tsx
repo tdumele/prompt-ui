@@ -33,7 +33,10 @@ export const Chat = () => {
             }
             setWriting(false);
             dispatchMessage({ type: ADD_MESSAGE, message: responseContent });
-        })
+        }).catch(() => {
+            setWriting(false);
+            dispatchMessage({ type: ADD_MESSAGE, message: { text: "Sorry, I couldn't process your request.", bot: true, id: crypto.randomUUID() } });
+        });
     }
 
     async function callChatbotAPI(message: string) {
