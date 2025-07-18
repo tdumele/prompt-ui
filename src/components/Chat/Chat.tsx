@@ -43,7 +43,7 @@ export const Chat = () => {
         setWriting(true);
         return fetch(API.bff.chat, {
             method: "POST",
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 content: message
             }),
@@ -82,7 +82,7 @@ export const Chat = () => {
                         type="text"
                         placeholder="Tape your message here"
                     />
-                    <a className="flex flex-col items-center p-2 w-full text-gray-900 fixed bottom-2 text-sm"
+                    <a className="flex flex-col items-center p-2 w-full text-gray-900 fixed bottom-2 text-sm "
                         onClick={() => dispatchMessage({ type: RESET_CHAT })}>
                         Reset
                     </a>
