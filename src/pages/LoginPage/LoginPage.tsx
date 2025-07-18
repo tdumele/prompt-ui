@@ -1,7 +1,17 @@
 import { useKeycloak } from "@react-keycloak/web";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const LoginPage = () => {
     const { keycloak } = useKeycloak();
+    const navigate = useNavigate();
+
+    // Rediriger automatiquement vers /chat si déjà authentifié
+    useEffect(() => {
+        if (keycloak.authenticated) {
+            navigate('/chat');
+        }
+    }, [keycloak.authenticated, navigate]);
 
     const handleLogin = () => {
         keycloak.login({
