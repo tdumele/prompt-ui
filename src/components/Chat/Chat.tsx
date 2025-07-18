@@ -60,8 +60,8 @@ export const Chat = () => {
                                 <p className="text-[#213555]">{message.text}</p>
                             </div>
                             :
-                            <div key={message.id} className="p-2 bg-[#D8C4B6] my-2 rounded-lg w-3/5 ml-auto text-right">
-                                <p className="text-[#213555]">{message.text}</p>
+                            <div key={message.id} className="p-2 bg-[#333] my-2 rounded-lg w-3/5 ml-auto text-right">
+                                <p className="text-[#F5F5F5]">{message.text}</p>
                             </div>
                     })
                 }
@@ -82,7 +82,7 @@ export const Chat = () => {
                         type="text"
                         placeholder="Tape your message here"
                     />
-                    <a className="flex flex-col items-center p-2 w-full text-gray-900 fixed bottom-2 text-sm "
+                    <a className="flex flex-col items-center p-2 w-20 text-gray-900 fixed bottom-2 text-sm hover:text-red-600 hover:scale-105 transition-all duration-200 hover:cursor-pointer"
                         onClick={() => dispatchMessage({ type: RESET_CHAT })}>
                         Reset
                     </a>
